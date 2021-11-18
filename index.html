@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Strode College Map</title>
+	<style>
+		.heading{
+			text-align: center;
+			font-size: 18pt;
+			background-color: aqua;
+		}
+		.text{
+			text-align: left;
+			font-size: 15pt;
+			background-color: lightgreen;
+		}
+	</style>
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+	      integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+	      crossorigin=""/>
+	<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+		integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+		crossorigin="">
+	</script>
+<!--Fullscreen-->
+	<script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js'>
+	</script>
+	<link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css' rel='stylesheet' />
+</head>
+<body>
+<!--Text-->
+	<p class = "heading">STRODE COLLEGE MAP</p>
+	<p class = "text">this is a map</p>
+	<p>u smell</p>
+<!-- Map -->
+	<div id="map" style="border: 4px solid black; width: 100%; height: 700px;"></div>
+	
+	<script>
+		var mymap = L.map('map').setView([51.12983, -2.73341], 15);
+		L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+		attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+		}).addTo(mymap);
+		
+		
+		
+		var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+	    	maxNativeZoom: 19,	
+	    	maxZoom: 20,
+	   	minZoom: 2,
+	    	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        	}).addTo(mymap);
+	
+		var google = L.tileLayer('https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+	    	subdomains:['mt0','mt1','mt2','mt3'],
+           	attribution: 'Imagery &copy; 2021 Google, Map data &copy; 2021 <a target="_blank" href="https://www.google.com/intl/en_uk/help/terms_maps/">Terms</a>',
+            	maxNativeZoom: 18,
+	    	maxZoom: 22
+        	});
+	    
+<!-- Map Markers -->
+	  var marker1 = L.marker([51.12983, -2.73341]).addTo(mymap);
+	    marker1.bindPopup("<img style='width: 200px' src='cblocktlevel.jpg'><p><b>C Block</b><br/>Digital T-level</p>");
+	    //marker1.bindPopup("<b>C Block</b><br/>Digital T-level").openPopup();
+		
+	  var marker2 = L.marker([51.130024,-2.733011]).addTo(mymap);
+	    marker2.bindPopup("<b>C Block</b><br>Art and Engineering");
+	    //marker2.bindPopup("<b>C Block</b><br>Art and Engineeringl").openPopup();
+		
+	  var marker3 = L.marker([51.129246,-2.731982]).addTo(mymap);
+	    marker3.bindPopup("<b>E Block</b><br>add title");
+	    //marker3.bindPopup("<b>E Block</b><br>add title").openPopup();
+		
+	  var marker4 = L.marker([51.129620,-2.732631]).addTo(mymap);
+	    marker4.bindPopup("<b>M Block</b><br>add title");
+	    //marker4.bindPopup("<b>M Block</b><br>add title").openPopup();
+		
+<!--Layers-->
+          var college = L.layerGroup([marker1, marker2,marker5,marker6]).addTo(mymap);
+		
+	  var baseMaps = {
+           "OSM": osm,
+           "Google": google
+          };
+	  var overlayMaps = {
+            "College": college
+          };
+	  L.control.layers(baseMaps, overlayMaps).addTo(mymap);
+<!--Unique Map Icons-->
+	  var strodeIcon = L.icon({
+		  iconUrl: 'strodelogo.png',
+		  
+		  iconSize:     [50, 50], // size of the icon
+		  iconAnchor:   [25, 25], // point of the icon which will correspond to marker's location
+		  popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+});
+		
+		L.marker([51.130758,-2.732775], {icon: strodeIcon}).addTo(mymap);
+		
+<!--Circles-->
+		var circle = L.circle([51.120280,-2.726327], {
+			color: 'red',
+    			fillColor: '#f03',
+    			fillOpacity: 0.5,
+    			radius: 500
+		}).addTo(mymap);
+<!--Fullscreen-->
+	mymap.addControl(new L.Control.Fullscreen());
+	</script>
+</body>
+</html>
